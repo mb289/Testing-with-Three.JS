@@ -3,11 +3,70 @@
     <head>
         <link rel="stylesheet" type="text/css" href="./bower_components/normalize.css/normalize.css">
         <link rel="stylesheet" type="text/css" href="./bower_components/typeplate-starter-kit/css/typeplate.css">
-        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <link rel="stylesheet" type="text/css" href="./css/test.css">
         <title></title>
+
+    <script type="text/javascript" src="./js/babylon.js"></script>
     </head>
     <body>
 
+<canvas id="renderCanvas"></canvas>
+
+<script>
+
+        var canvas = document.getElementById("renderCanvas");
+        var engine = new BABYLON.Engine(canvas, true);
+        var Scene = new BABYLON.Scene(engine);
+
+        //cameras
+        var Camera = new BABYLON.ArcRotateCamera("Camera", 1, 1, 20, new BABYLON.Vector3(0, 0, 0), Scene);
+
+        //lights
+        var light0 = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 0, 10), Scene);
+
+        //meshes
+        //sphere parameters are: name, number of segments (highly detailed or not), size, scene to attach the mesh.
+        var ball = BABYLON.Mesh.CreateSphere("Ball", 20, 1.0, Scene);
+        ball.position.x = -5; //position mesh
+        ball.position.y = 10;
+
+
+        //box parameters are: name, size of the box, the scene to attach the mesh.
+        var box = BABYLON.Mesh.CreateBox("Box", 10, Scene);
+        box.position.x = -10; //position mesh
+
+        //plane parameters are: name, size, and scene to attach the mesh.
+        // var plane = BABYLON.Mesh.CreatePlane("Plane", 10.0, Scene);
+        // plane.position.x = 2; //position mesh
+        // plane.rotation.y = Math.PI;//rotate 180
+
+        var ground = BABYLON.Mesh.CreateGround("ground", 50, 50, 10, Scene);
+        ground.position.x = -5;
+        ground.position.y = -5;
+
+
+        //cylinder parameters are:
+        //name, height, diameterTop, diameterBottom, tessellation (highly detailed or not), scene, updatable.
+        var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 10, 4, 4, 20, Scene, false);
+        cylinder.position.x = 30; //position mesh
+        cylinder.position.y =10;
+        cylinder.position.z = 20;
+
+           var cylinder2 = BABYLON.Mesh.CreateCylinder("cylinder2", 10, 4, 4, 20, Scene, false);
+        cylinder.position.x = 15; //position mesh
+        cylinder.position.y =0;
+        cylinder.position.z = -20;
+
+        Scene.activeCamera.attachControl(canvas);
+        
+        engine.runRenderLoop(function () {
+            Scene.render();
+        });
+
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+</script>
 
         <script src="http://threejs.org/build/three.min.js"></script>
         <script type="text/javascript" src="./bower_components/Loader/loader.js" id="loaderjs" data-app="./js/app.js"></script>
